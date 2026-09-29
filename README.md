@@ -11,7 +11,7 @@ This repository contains my Object-Oriented Programming practical programs imple
 | Experiment No. | Topic | Status |
 |---|---|---|
 | 01 | Basic Calculator | ✔ |
-| 02 | Coming Soon | ⏳ |
+| 02 | Constructor Overloading | ✔ |
 | 03 | Coming Soon | ⏳ |
 | 04 | Coming Soon | ⏳ |
 
