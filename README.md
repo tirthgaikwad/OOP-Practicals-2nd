@@ -13,8 +13,9 @@ This repository contains my Object-Oriented Programming practical programs imple
 | 01 | Basic Calculator | ✔ |
 | 02 | Constructor Overloading | ✔ |
 | 03 | Multidimensional Arrays  | ✔ |
-| 04 | hierarchical inheritance | ⏳ |
-| 05 | Coming Soon | ⏳ |
+| 04 | hierarchical inheritance | ✔ |
+| 05 | Method Overriding | ✔ |
+| 06 | Interfaces | ⏳ |
 
 ## 🎯 Purpose
 
