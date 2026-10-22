@@ -15,7 +15,8 @@ This repository contains my Object-Oriented Programming practical programs imple
 | 03 | Multidimensional Arrays  | ✔ |
 | 04 | hierarchical inheritance | ✔ |
 | 05 | Method Overriding | ✔ |
-| 06 | Interfaces | ⏳ |
+| 06 | Interfaces | ✔ |
+| 07 | Exception Handling | ⏳ |
 
 ## 🎯 Purpose
 
