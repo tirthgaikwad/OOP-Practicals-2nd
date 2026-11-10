@@ -1,63 +1,60 @@
-class Student {
-    public int roll;
-    public String name;
-    public double CGPA;
 
-    // Default constructor
-    public Student() {
-        roll = 0;
+class Employee {
+
+    int id;
+    String name;
+    double salary;
+
+    // Default constructor 
+    Employee() {
+        id = 0;
         name = "Unknown";
-        CGPA = 0.00;
+        salary = 0;
     }
 
     // Constructor with name only
-    public Student(String name) {
-        this.name = name;
-        roll = 0;
-        CGPA = 0.00;
+    Employee(String n) {
+        id = 0;
+        name = n;
+        salary = 0;
     }
 
-    // Constructor with name and CGPA
-    public Student(String name, double CGPA) {
-        this.name = name;
-        this.CGPA = CGPA;
-        roll = 0;
+    // Constructor with name and salary
+    Employee(String n, double s) {
+        id = 0;
+        name = n;
+        salary = s;
     }
 
     // Constructor with all details
-    public Student(int roll, String name, double CGPA) {
-        this.roll = roll;
-        this.name = name;
-        this.CGPA = CGPA;
+    Employee(int i, String n, double s) {
+        id = i;
+        name = n;
+        salary = s;
     }
 
-    // Display student details
+    // Display employee details
     void display() {
-        System.out.println("Roll No. of student: " + roll);
-        System.out.println("Name of student: " + name);
-        System.out.println("CGPA of student: " + CGPA);
-        System.out.println();
+        System.out.println("Employee ID: " + id);
+        System.out.println("Employee Name: " + name);
+        System.out.println("Monthly Salary: " + salary);
+
+        System.out.println("Annual Salary: " + (salary * 12));
+        System.out.println("----------------------");
     }
 }
 
-public class Practical_2 {
-    public static void main(String[] args) {
+public class exam {
+    public static void main(String args[]) {
 
-        Student s1 = new Student();
-        Student s2 = new Student("Tirth");
-        Student s3 = new Student("Lucky", 9.5);
-        Student s4 = new Student(101, "Om", 6.0);
+        Employee e1 = new Employee();
+        Employee e2 = new Employee("Rahul");
+        Employee e3 = new Employee("Amit", 25000);
+        Employee e4 = new Employee(101, "Tirth", 30000);
 
-        System.out.println("Default Constructor");
-        s1.display();
-
-        System.out.println("Constructor with Name Only");
-        s2.display();
-
-        System.out.println("Constructor with Name and CGPA");
-        s3.display();
-
-        System.out.println("Constructor with All Details");
-        s4.display();
+        e1.display();
+        e2.display();
+        e3.display();
+        e4.display();
     }
 }
