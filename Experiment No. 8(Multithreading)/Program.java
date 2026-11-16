@@ -1,121 +1,98 @@
 
-class ChatUser extends Thread {
-    private volatile boolean running = true;
-    private boolean paused = false;
-    private final Object lock = new Object();
+class User extends Thread
+{
+    String name;
+    boolean running = true;
+    boolean paused = false;
 
-    ChatUser(String name, int priority) {
-        super(name);
-        setPriority(priority);
+    User(String name)
+    {
+        this.name = name;
     }
 
-    // Suspend thread safely
-    void pauseThread() {
-        synchronized (lock) {
-            paused = true;
-            System.out.println(getName() + " is paused.");
-        }
-    }
-
-    // Resume thread safely
-    void resumeThread() {
-        synchronized (lock) {
-            paused = false;
-            lock.notifyAll();
-            System.out.println(getName() + " is resumed.");
-        }
-    }
-
-    // Terminate thread safely
-    void terminateThread() {
-        running = false;
-        resumeThread();
-        System.out.println(getName() + " is terminating.");
-    }
-
-    // Check whether thread is paused
-    void checkPause() throws InterruptedException {
-        synchronized (lock) {
-            while (paused && running) {
-                lock.wait();
+    public void run()
+    {
+        for (int i = 1; i <= 3 && running; i++)
+        {
+            synchronized(this)
+            {
+                while (paused)
+                {
+                    try {
+                        wait();
+                    }
+                    catch(Exception e) {}
+                }
             }
-        }
-    }
 
-    public void run() {
-        try {
-            for (int i = 1; i <= 5 && running; i++) {
-                checkPause();
+            if (!running)
+                break;
 
-                if (!running)
-                    break;
+            System.out.println(name + " sends message " + i);
 
-                System.out.println(getName() +
-                    " sends message: Hello " + i);
-
-                System.out.println(getName() +
-                    " receives a message.");
-
+            try {
                 Thread.sleep(500);
             }
-        } catch (InterruptedException e) {
-            System.out.println(getName() + " interrupted.");
+            catch(Exception e) {}
         }
 
-        System.out.println(getName() + " has left the chat.");
+        System.out.println(name + " left the chat.");
+    }
+
+    void suspendThread()
+    {
+        paused = true;
+    }
+
+    synchronized void resumeThread()
+    {
+        paused = false;
+        notify();
+    }
+
+    void stopThread()
+    {
+        running = false;
+        resumeThread();
     }
 }
 
-public class Main {
-    public static void main(String[] args) {
-        ChatUser user1 = new ChatUser(
-            "User 1 (Important)", Thread.MAX_PRIORITY);
+public class Practical_8
+{
+    public static void main(String[] args)
+    {
+        User u1 = new User("Rahul");
+        User u2 = new User("Amit");
 
-        ChatUser user2 = new ChatUser(
-            "User 2", Thread.NORM_PRIORITY);
+        // Set thread priorities
+        u1.setPriority(Thread.MAX_PRIORITY);
+        u2.setPriority(Thread.MIN_PRIORITY);
 
-        ChatUser user3 = new ChatUser(
-            "User 3", Thread.MIN_PRIORITY);
+        // Start threads
+        u1.start();
+        u2.start();
 
-        // Start chat threads
-        user1.start();
-        user2.start();
-        user3.start();
+        // Check thread activity
+        System.out.println("Rahul Alive: " + u1.isAlive());
+        System.out.println("Amit Alive: " + u2.isAlive());
 
-        try {
-            Thread.sleep(800);
+        // Suspend Rahul
+        u1.suspendThread();
 
-            // Suspend User 2
-            user2.pauseThread();
+        // Resume Rahul
+        u1.resumeThread();
 
-            Thread.sleep(1000);
-
-            // Resume User 2
-            user2.resumeThread();
-
-            Thread.sleep(800);
-
-            // Terminate User 3
-            user3.terminateThread();
-
-            // Check thread activity
-            System.out.println("\n--- Thread Status ---");
-            System.out.println("User 1 Alive: " +
-                user1.isAlive());
-            System.out.println("User 2 Alive: " +
-                user2.isAlive());
-            System.out.println("User 3 Alive: " +
-                user3.isAlive());
-
-            // Wait for all threads to finish
-            user1.join();
-            user2.join();
-            user3.join();
-
-            System.out.println("\nAll chat threads completed.");
-
-        } catch (InterruptedException e) {
-            System.out.println("Main thread interrupted.");
+        // Wait for threads to finish
+        try
+        {
+            u1.join();
+            u2.join();
         }
+        catch(Exception e) {}
+
+        // Terminate Rahul
+        u1.stopThread();
+
+        System.out.println("Chat Ended");
     }
 }
